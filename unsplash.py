@@ -12,7 +12,7 @@ def access_key(input_value: str) -> str:
         return 'YOUR_ACCESS_KEY'
 
 
-def get_image(key: str) -> str:
+def get_image(key: str):
     # https://unsplash.com/oauth/applications 에서 보이는 Access Key
     url = "https://api.unsplash.com/photos/?" + "client_id=" + key
     response = requests.get(url, verify=False)
