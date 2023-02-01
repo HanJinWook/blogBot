@@ -4,14 +4,13 @@ import chat_gpt
 import unsplash
 
 
-user = "jino"
+blog_name = "nothinkblarblar"
 
 
 def post_blog_using_keyword(input_keyword: str, input_cnt: int, input_expose: str):
 
-    blog_name = tistory.blog_name(user)
-    token = tistory.token(user)
-    access_key = unsplash.access_key(user)
+    token = tistory.token(blog_name)
+    access_key = unsplash.access_key(blog_name)
 
     # 키워드 기반으로 주제 n개 뽑기
     subject_keyword = input_keyword  # 키워드

@@ -3,16 +3,16 @@ import json
 
 
 # https://unsplash.com/oauth/applications
-def access_key(user: str):
-    if user == "jino":
+def access_key(input_value: str) -> str:
+    if input_value == "nothinkblarblar":
         return 'YOUR_ACCESS_KEY'
-    elif user == "charlie":
+    elif input_value == "peachblarblar":
         return 'YOUR_ACCESS_KEY'
-    elif user == "joe":
+    elif input_value == "lifeisblarblar":
         return 'YOUR_ACCESS_KEY'
 
 
-def get_image(key):
+def get_image(key: str) -> str:
     # https://unsplash.com/oauth/applications 에서 보이는 Access Key
     url = "https://api.unsplash.com/photos/?" + "client_id=" + key
     response = requests.get(url, verify=False)

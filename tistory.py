@@ -9,21 +9,26 @@ key = [
 ]
 
 
-def blog_name(user: str):
-    if user == "jino":
-        return key[0]['blogName']
-    elif user == "charlie":
-        return key[1]['blogName']
-    elif user == "joe":
-        return key[2]['blogName']
+def id_and_key(input_value: str) -> list:
+    for i in range(len(key)):
+        blog_name = key[i]['blogName']
+        li = []
+        if blog_name == input_value:
+            li.append(key[i]['app_id'])
+            li.append(key[i]['secret_key'])
+            return li
 
 
-def token(user: str):
-    if user == "jino":
+# idKey_list = id_and_key('nothinkblarblar')
+# print(idKey_list)
+
+
+def token(input_value: str) -> str:
+    if input_value == "nothinkblarblar":
         return 'YOUR_TISTORY_TOKEN'
-    elif user == "charlie":
+    elif input_value == "peachblarblar":
         return 'YOUR_TISTORY_TOKEN'
-    elif user == "joe":
+    elif input_value == "lifeisblarblar":
         return 'YOUR_TISTORY_TOKEN'
 
 
