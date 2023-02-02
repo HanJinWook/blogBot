@@ -4,8 +4,7 @@ import main
 
 def btn_start():
     text = entry.get()
-    expose = radio_select()
-    main.post_blog_by_keyword(str(text), int(spin_value.get()), str(expose))
+    main.post_blog_by_keyword(text, spin_value.get(), radio_select())
 
 
 def radio_select():
