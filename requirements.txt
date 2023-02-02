@@ -1,0 +1,8 @@
+kiwipiepy==0.14.1
+kiwipiepy-model==0.14.0
+Markdown==3.4.1
+openai==0.26.4
+pandas==1.5.3
+politely==3.1.1
+requests==2.28.2
+urllib3==1.26.14
