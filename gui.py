@@ -5,7 +5,7 @@ import main
 def btn_start():
     text = entry.get()
     expose = radio_select()
-    main.post_blog_using_keyword(str(text), int(spin_value.get()), str(expose))
+    main.post_blog_by_keyword(str(text), int(spin_value.get()), str(expose))
 
 
 def radio_select():
@@ -14,7 +14,7 @@ def radio_select():
 
 
 root = tk.Tk()
-root.title("blogBot v1.0.1")
+root.title("blogBot")
 root.geometry("250x300")
 
 tk.Label(text="\n블로그 주제").pack()
