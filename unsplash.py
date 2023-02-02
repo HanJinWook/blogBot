@@ -2,7 +2,7 @@ import requests
 import json
 
 
-# https://unsplash.com/oauth/applications
+# https://unsplash.com/oauth/applications 에서 확인
 access_key = 'YOUR_ACCESS_KEY'
 
 

@@ -9,9 +9,7 @@ blog_name = 'YOUR_BLOG_NAME'  # 티스토리 블로그 이름
 
 # 키워드 기반으로 자동 글쓰기
 def post_blog_by_keyword(keyword: str, count: str, expose: str):  # 주제, 작성 개수, 게시글 노출 여부(0: 비공개, 3: 공개)
-
-    token = tistory.token_value(blog_name)  # 티스토리 토큰
-    access_key = unsplash.access_key(blog_name)  # Unsplash 액세스 키
+    access_key = unsplash.access_key  # Unsplash 액세스 키
 
     # 키워드 기반으로 주제 n개 뽑기
     subject_keyword = keyword  # 키워드

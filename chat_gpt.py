@@ -1,7 +1,8 @@
 import openai
 
 
-openai.api_key = 'YOUR_OPENAI_KEY'  # https://platform.openai.com/account/api-keys 에서 확인
+# https://platform.openai.com/account/api-keys 에서 확인
+openai.api_key = 'YOUR_OPENAI_KEY'
 
 
 def make_subject(keyword: str, count: str) -> list:
