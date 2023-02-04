@@ -6,27 +6,22 @@ import json
 access_key = 'YOUR_ACCESS_KEY'
 
 
-def get_image(key: str):  # 이미지 뽑기 연습
+def get_image(key: str):
     url = 'https://api.unsplash.com/photos/?' + 'client_id=' + key
     response = requests.get(url, verify=False)
     print(response.status_code)
     print(response.text)
     return response
 
-# Test Code
+# Test Code - 액세스 키 기반으로 이미지 뽑기
 # get_image(access_key)
 
 
-def random_image(query, count, key):  # 쿼리와 일치하는 랜덤 이미지 뽑기
+def random_image(query: str, count: str, key: str):  # 쿼리와 일치하는 랜덤 이미지 뽑기
     url = 'https://api.unsplash.com/photos/random?' + 'client_id=' + key
     parameters = {
-        # 'collections': '',
-        # 'topics': '',
-        # 'username': '',
         'query': query,
-        # 'orientation': '',
-        # 'content_filter': '',
-        'count': str(count)
+        'count': count,
     }
     response = requests.get(url, params=parameters, verify=False)
     print(response.status_code)
@@ -38,5 +33,5 @@ def random_image(query, count, key):  # 쿼리와 일치하는 랜덤 이미지 
     print(html_url)
     return html_url
 
-# Test Code
-# random_image('Computer', 3, access_key)
+# Test Code - 컴퓨터 사진 3개 랜덤 뽑기
+# random_image('Computer', '3', access_key)
