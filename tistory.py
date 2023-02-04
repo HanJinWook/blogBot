@@ -19,9 +19,8 @@ def id_and_key(text: str) -> list:  # 블로그 이름과 일치하는 App ID, S
             print(li)
             return li
 
-# Test Code
-# YOUR_BLOG_NAME_1 에 해당하는 블로그의 App ID, Secret Key 가져오기
-# (id_and_key('YOUR_BLOG_NAME_1')
+# Test Code - YOUR_BLOG_NAME_1 에 해당하는 블로그의 App ID, Secret Key 가져오기
+# id_and_key('YOUR_BLOG_NAME_1')
 
 
 # Step2) 토큰을 받기 위한 code 알아내기
@@ -38,8 +37,7 @@ def get_auth_code(blog_name: str) -> str:  # 블로그 이름과 App ID 기반�
     print(url)
     return url
 
-# Test Code
-# 아래 코드 실행 후 나오는 URL을 크롬에서 접속 > '허가하기' 버튼 클릭 > 주소창에서 code 뒤에 보이는 값이 인증코드
+# Test Code - 아래 코드 실행 후 나오는 URL을 크롬에서 접속 > '허가하기' 버튼 클릭 > 주소창에서 code 뒤에 보이는 값이 인증코드
 # get_auth_code('YOUR_BLOG_NAME_1')
 
 
@@ -65,8 +63,7 @@ def get_access_token(blog_name: str, code: str) -> str:  # 블로그 이름과 �
     print(response.text)
 
 
-# Test Code
-# 2번 단계에서 알아낸 인증코드 기반으로 아래 코드 실행 > 출력 결과가 토큰 값
+# Test Code - 2번 단계에서 알아낸 인증코드 기반으로 아래 코드 실행 > 출력 결과가 토큰 값
 # code = 'GET_CODE_BY_AUTH'
 # get_access_token('YOUR_BLOG_NAME_1', code)
 
@@ -82,8 +79,9 @@ def token_value(text: str) -> str:
 
 
 # Step5) 토큰 이용해서 티스토리에 글쓰기
-def post_blog(title: str, content: str, tag: str, expose: str, blog_name: str):
+def post_blog(title: str, content: str, tag: str, expose: bool, blog_name: str):
     url = 'https://www.tistory.com/apis/post/write?'
+    visibility = '3' if expose else '0'  # expose 값이 True면 '3' 세팅하고 False면 '0' 세팅
     parameters = {
         'access_token': token_value(blog_name),  # 토큰 값
         'output': '{output-type}',  # 선택 옵션
@@ -91,7 +89,7 @@ def post_blog(title: str, content: str, tag: str, expose: str, blog_name: str):
         'title': title,  # 게시글 제목
         'content': content,  # 게시글 내용
         'tag': tag,  # 태그
-        'visibility': expose  # 글 노출여부 (0:비공개, 3:공개)
+        'visibility': visibility,  # 게시글 노출 여부(0:비공개, 3:공개)
     }
     response = requests.post(url, params=parameters, verify=False)
 
@@ -102,5 +100,5 @@ def post_blog(title: str, content: str, tag: str, expose: str, blog_name: str):
     print(response.status_code)
     print(response.text)
 
-# Test Code
-# post_blog("제목", "내용", "태그", '0', 'YOUR_BLOG_NAME_1')
+# Test Code - 입력값 : 제목, 내용, 태그, 노출 여부, 블로그 이름
+# post_blog("제목", "내용", "태그", False, 'YOUR_BLOG_NAME_1')
