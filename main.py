@@ -37,12 +37,9 @@ def post_blog_by_keyword(keyword: str, count: str, expose: bool, isKorean: bool)
         img = unsplash.random_image(title, '5', access_key)  # 제목과 어울리는 이미지 찾기
 
         if isKorean:  # 한글로 번역
-            title = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'],
-                                         title)  # 제목 번역
-            article = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'],
-                                           article)  # 게시글 번역
-            tag = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'],
-                                       tag)  # 태그 번역
+            title = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'], title)  # 제목 번역
+            article = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'], article)  # 게시글 번역
+            tag = papago.run_translate(papago.client_key[i]['client_id'], papago.client_key[i]['client_secret'], tag)  # 태그 번역
 
         blog_sum = img + article  # 이미지와 게시글 내용을 합치기
         html = markdown.markdown(blog_sum)  # 마크다운 -> HTML
