@@ -1,11 +1,14 @@
 import requests
+import json
+
+
+with open('key.json', 'r') as f:
+  key_json = json.load(f)
 
 
 # Step1) https://www.tistory.com/guide/api/manage/register 에서 확인해서 채워넣기 (여러 개의 티스토리 블로그 운영한다고 가정)
 key = [
-    {'blogName': 'YOUR_BLOG_NAME_1', 'app_id': 'YOUR_APP_ID_1', 'secret_key': 'YOUR_SECRET_KEY_1'},
-    {'blogName': 'YOUR_BLOG_NAME_2', 'app_id': 'YOUR_APP_ID_2', 'secret_key': 'YOUR_SECRET_KEY_2'},
-    {'blogName': 'YOUR_BLOG_NAME_3', 'app_id': 'YOUR_APP_ID_3', 'secret_key': 'YOUR_SECRET_KEY_3'},
+    {'blogName': 'dreamwiki', 'app_id': '앱아이디', 'secret_key': '시크릿키'},
 ]
 
 
@@ -19,12 +22,13 @@ def id_and_key(text: str) -> list:  # 블로그 이름과 일치하는 App ID, S
             print(li)
             return li
 
-# Test Code - YOUR_BLOG_NAME_1 에 해당하는 블로그의 App ID, Secret Key 가져오기
-# id_and_key('YOUR_BLOG_NAME_1')
+
+# Test Code - 블로그의 App ID, Secret Key 가져오기
+# id_and_key('dreamwiki')
 
 
 # Step2) 토큰을 받기 위한 code 알아내기
-def get_auth_code(blog_name: str) -> str:  # 블로그 이름과 App ID 기반으로 인증코드를 받을 수 있는 URL 출력
+def get_auth_code(blog_name: str):  # 블로그 이름과 App ID 기반으로 인증코드를 받을 수 있는 URL 출력
     response_type = "code"
     state = "anything"
     client_id = id_and_key(blog_name)[0]
@@ -35,14 +39,14 @@ def get_auth_code(blog_name: str) -> str:  # 블로그 이름과 App ID 기반�
           'response_type=' + response_type + '&' + \
           'state=' + state
     print(url)
-    return url
+
 
 # Test Code - 아래 코드 실행 후 나오는 URL을 크롬에서 접속 > '허가하기' 버튼 클릭 > 주소창에서 code 뒤에 보이는 값이 인증코드
-# get_auth_code('YOUR_BLOG_NAME_1')
+# get_auth_code('dreamwiki')
 
 
 # Step3) 글쓰기에 필요한 토큰 발급받기
-def get_access_token(blog_name: str, code: str) -> str:  # 블로그 이름과 인증코드 기반으로 토큰 발급
+def get_access_token(blog_name: str, code: str):  # 블로그 이름과 인증코드 기반으로 토큰 발급
     client_id = id_and_key(blog_name)[0]
     client_secret = id_and_key(blog_name)[1]
     redirect_uri = 'https://' + blog_name + '.tistory.com'
@@ -56,7 +60,6 @@ def get_access_token(blog_name: str, code: str) -> str:  # 블로그 이름과 �
 
     if response.status_code == 200:
         print("토큰 받기 성공")
-        return response.text
     else:
         print("토큰 받기 실패")
     print(response.status_code)
@@ -64,18 +67,11 @@ def get_access_token(blog_name: str, code: str) -> str:  # 블로그 이름과 �
 
 
 # Test Code - 2번 단계에서 알아낸 인증코드 기반으로 아래 코드 실행 > 출력 결과가 토큰 값
-# code = 'GET_CODE_BY_AUTH'
-# get_access_token('YOUR_BLOG_NAME_1', code)
+# code = '인증코드'
+# get_access_token('dreamwiki', code)
 
 
-# Step4) 발급받은 토큰 값을 아래 함수에 채워넣기
-def token_value(text: str) -> str:
-    if text == 'YOUR_BLOG_NAME_1':
-        return 'YOUR_TISTORY_TOKEN_1'
-    elif text == 'YOUR_BLOG_NAME_2':
-        return 'YOUR_TISTORY_TOKEN_2'
-    elif text == 'YOUR_BLOG_NAME_3':
-        return 'YOUR_TISTORY_TOKEN_3'
+# Step4) 발급받은 토큰 값을 key.json 파일에 채워넣기
 
 
 # Step5) 토큰 이용해서 티스토리에 글쓰기
@@ -83,7 +79,7 @@ def post_blog(title: str, content: str, tag: str, expose: bool, blog_name: str):
     url = 'https://www.tistory.com/apis/post/write?'
     visibility = '3' if expose else '0'  # expose 값이 True면 '3' 세팅하고 False면 '0' 세팅
     parameters = {
-        'access_token': token_value(blog_name),  # 토큰 값
+        'access_token': key_json['tistory'][blog_name],  # 토큰 값
         'output': '{output-type}',  # 선택 옵션
         'blogName': blog_name,  # 블로그 이름
         'title': title,  # 게시글 제목
@@ -100,5 +96,6 @@ def post_blog(title: str, content: str, tag: str, expose: bool, blog_name: str):
     print(response.status_code)
     print(response.text)
 
+
 # Test Code - 입력값 : 제목, 내용, 태그, 노출 여부, 블로그 이름
-# post_blog("제목", "내용", "태그", False, 'YOUR_BLOG_NAME_1')
+# post_blog("제목", "내용", "태그", False, 'dreamwiki')

@@ -1,8 +1,13 @@
 import openai
+import json
+
+
+with open('key.json', 'r') as f:
+  key_json = json.load(f)
 
 
 # https://platform.openai.com/account/api-keys 에서 확인
-openai.api_key = 'YOUR_OPENAI_KEY'
+openai.api_key = key_json['openai']['api_key']
 
 
 def make_subject(keyword: str, count: str) -> list:  # 입력값 : 키워드, 개수
@@ -20,6 +25,7 @@ def make_subject(keyword: str, count: str) -> list:  # 입력값 : 키워드, �
   li = response['choices'][0]['text'].strip()  # 응답 결과 중 텍스트만 저장
   subject_list = list(li.replace(", ", ",").split(","))  # 문자열을 쉼표 기준으로 분리하여 리스트에 저장
   return subject_list
+
 
 # Test Code - 음악 키워드로 주제 3개 뽑기
 # print(make_subject("Music", '3'))
@@ -40,8 +46,9 @@ def make_article(subject: str, number: str) -> str:  # 입력값 : 주제, 글�
   article = response['choices'][0]['text']
   return article
 
+
 # Test Code - 한국의 유명한 가수라는 주제로 2000자 내외 글쓰기
-# print(make_article("Famous Singer in Korea", '2000'))
+# print(make_article("Classical Music", '2000'))
 
 
 def make_tag(text: str, count: str) -> str:  # 입력값 : 텍스트, 개수
@@ -58,6 +65,7 @@ def make_tag(text: str, count: str) -> str:  # 입력값 : 텍스트, 개수
   )
   tag = response['choices'][0]['text']
   return tag
+
 
 # Test Code - 한국의 유명한 가수와 어울리는 태그 5개 뽑기
 # text = "Famous Singer in Korea"

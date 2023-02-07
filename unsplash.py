@@ -2,8 +2,12 @@ import requests
 import json
 
 
+with open('key.json', 'r') as f:
+  key_json = json.load(f)
+
+
 # https://unsplash.com/oauth/applications 에서 확인
-access_key = 'YOUR_ACCESS_KEY'
+access_key = key_json['unsplash']['access_key']
 
 
 def get_image(key: str):
@@ -12,6 +16,7 @@ def get_image(key: str):
     print(response.status_code)
     print(response.text)
     return response
+
 
 # Test Code - 액세스 키 기반으로 이미지 뽑기
 # get_image(access_key)
@@ -32,6 +37,7 @@ def random_image(query: str, count: str, key: str):  # 쿼리와 일치하는 �
         html_url += '<img src=' + json_object[i]['urls']['small'] + ' />\n'
     print(html_url)
     return html_url
+
 
 # Test Code - 컴퓨터 사진 3개 랜덤 뽑기
 # random_image('Computer', '3', access_key)
